@@ -4,5 +4,5 @@ from .models import *
 
 admin.site.register(Company)
 admin.site.register(PermissionGroup)
-admin.site.register(Permissions)
+admin.site.register(Permission)
 admin.site.register(User)

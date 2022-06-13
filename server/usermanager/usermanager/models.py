@@ -1,14 +1,18 @@
 from django.db import models
-
-
+# from django.contrib.auth.models import AbstractUser
 
 class Company(models.Model):
 
     name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.name
+
 class PermissionGroup(models.Model):
 
     name = models.CharField(max_length=50)
+    def __str__(self):
+        return self.name
 
 class User(models.Model):
 
@@ -17,9 +21,19 @@ class User(models.Model):
     username = models.CharField(max_length=50)
     password = models.CharField(max_length=32)
     created_at = models.DateTimeField(auto_now_add=True)
-    company_id = models.ForeignKey(Company, on_delete=models.CASCADE)
-    permission_group = models.ForeignKey(PermissionGroup, on_delete=models.CASCADE)
+    company_id = models.ForeignKey(Company, on_delete=models.CASCADE, null= True)
+    permission_group = models.ForeignKey(PermissionGroup, on_delete=models.CASCADE, null= True)
 
-class Permissions(models.Model):
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
+
+class Permission(models.Model):
     access_name = models.CharField(max_length=32)
+    def __str__(self):
+        return self.access_name
+
+class UserPermission(models.Model):
+
+    p_id = models.ForeignKey(Permission, on_delete=models.CASCADE)
     p_group_id = models.ForeignKey(PermissionGroup, on_delete=models.CASCADE)
+    
