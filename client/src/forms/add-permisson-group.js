@@ -12,46 +12,36 @@ function AddPermissionGroup() {
     formState: { errors },
   } = useForm();
   const onSubmit = (data) => {
-    console.log("hello");
-    const res = fetch(`${baseURL}/add-user/`, {
+    console.log(data);
+    const res = fetch(`${baseURL}/add-permission-group/`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(data),
-    });
-    if (!res.ok) {
-      const message = `An error has occured: ${res.status} - ${res.statusText}`;
-      throw new Error(message);
-    }
-    const res_data = res.json();
-    console.log(data);
+    }).then(async response => {
+            const isJson = response.headers.get('content-type')?.includes('application/json');
+            const data = isJson && await response.json();
+
+            // check for error response
+            if (!response.ok) {
+                // get error message from body or default to response status
+                const error = (data && data.message) || response.status;
+                return Promise.reject(error);
+            }
+
+            this.setState({ postId: data.id })
+        })
+        .catch(error => {
+            this.setState({ errorMessage: error.toString() });
+            console.error('There was an error!', error);
+        });
+
   };
-  const [getpermissions, setPermissionList] = useState([]);
-  const [getcompanies, setCompaniesList] = useState([]);
+ 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    fetchData();
-  }, []);
 
-  const fetchData = () => {
-    setLoading(true);
-
-    fetch(`${baseURL}/get-form-data/`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setPermissionList(data.data.cmp)
-        setCompaniesList(data.data.pms)
-        // setUsersList(data);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log(error);
-        setLoading(false);
-      });
-  };
   return (
   <div className="row">
       <div className="col-md-6">
@@ -60,12 +50,12 @@ function AddPermissionGroup() {
             <Form.Field>
               <label>Enter Permission Group</label>
               <input
-                placeholder="First Name"
+                placeholder="Permission Name"
                 type="text"
-                {...register("first_name", { required: true, maxLength: 10 })}
+                {...register("name", { required: true})}
               />
             </Form.Field>
-            {errors.first_name && <p>Please check the First Name</p>}
+            {errors.name && <p>Permission name must be filled</p>}
             
             <Button type="submit">Submit</Button>
           </Form>

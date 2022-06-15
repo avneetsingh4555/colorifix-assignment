@@ -22,4 +22,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('add-user/', views.register_user),
     path('get-form-data/', views.get_company),
+    path('add-permission-group/', views.add_permission_group),
 ]
