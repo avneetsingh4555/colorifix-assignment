@@ -1,7 +1,7 @@
 import imp
 from django.http import JsonResponse
-from .models import User
-from .serializers import UserSerializer
+from .models import User,PermissionGroup, Company
+from .serializers import PermissionGroupSerializer, UserSerializer, CompanySerializer
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -16,11 +16,27 @@ def register_user(request):
 
 
     if request.method == 'POST':
-        print('hello')
+        print(request.data)
         serializer = UserSerializer(data=request.data)
 
         if serializer.is_valid():
             print('abcd')
             serializer.save()
             return Response(serializer.data, status = status.HTTP_201_CREATED)
-    
+
+
+def get_company(request):
+
+    if request.method == 'GET':
+        print('hello')
+        permissions = PermissionGroup.objects.all()
+        companies= Company.objects.all()
+        # companies = CompanySerializer(Company.objects.all()).data
+        # print(users[0].company_id.name)
+        pms = PermissionGroupSerializer(permissions, many = True)
+        cmp = CompanySerializer(companies, many = True)
+        entities = {
+        'pms': pms.data,
+        'cmp': cmp.data,
+    }
+        return JsonResponse({'data': entities})

@@ -2,50 +2,52 @@ import React from "react";
 import axios from "axios";
 import { useState, useEffect, useRef } from "react";
 
-function UsersList(){
-    const baseURL = "http://127.0.0.1:8000";
-    // const { register, handleSubmit, formState: { errors } } = useForm();
+function UsersList() {
+  const baseURL = "http://127.0.0.1:8000";
+  // const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const user = useRef([]);
-    const [getUsers, setUsersList] = useState([]);
-    useEffect(() => {
+  const user = useRef([]);
+  const [getUsers, setUsersList] = useState([]);
+
+  useEffect(() => {
     axios
-    .get(`${baseURL}/add-user/`)
-    .then(response => {
-          
-            // this.setState({data: response.data});
-        console.log(response)
-        setUsersList(response.data.users)
-        })
-        .catch(error => {
-            console.log(error)
-        })
-    }, []);
-    return (
-      <div>
-     
-      {getUsers.map(user => (
-        <div key={user.id}>
-          <h2>
-            Name: {user.id}</h2>
-          {Object.keys(user).map((  key, index) => {
-        return (
-          <div key={index}>
-            <h2>
-              {key}: {user[key]}
-            </h2>
-
-            <hr />
-          </div>
-        );
-      })}
- 
-        </div>
-      ))}
-      </div>
-      
-    );
-
+      .get(`${baseURL}/add-user/`)
+      .then((response) => {
+        // this.setState({data: response.data});
+        console.log(response.data.users);
+        setUsersList(response.data.users);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
+  return (
+    <div>
+      <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Permission Group</th>
+      <th scope="col">Company</th>
+    </tr>
+  </thead>
+  <tbody>
+     {getUsers.map((user) => (
+    <tr>
+      <th scope="row">{user.id}</th>
+      <td>{user.first_name}{' '}{user.last_name}</td>
+      <td>{user.email}</td>
+      <td>{user.company.name}</td>
+      <td>{user.p_group.name}</td>
+    </tr>
+     ))}
+  </tbody>
+</table>
+    
+    </div>
+  );
 }
- 
+
 export default UsersList;

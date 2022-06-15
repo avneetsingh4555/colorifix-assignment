@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
 function Navbar(){
     return(
  <div class="container">
@@ -15,7 +16,7 @@ function Navbar(){
         <Link class="nav-link" to="/users-list">Users List</Link>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Add Permission</a>
+        <Link class="nav-link" to="/add-permission-group">Add Permission</Link>
       </li>
      
      

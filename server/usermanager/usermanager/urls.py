@@ -21,4 +21,5 @@ from usermanager import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('add-user/', views.register_user),
+    path('get-form-data/', views.get_company),
 ]

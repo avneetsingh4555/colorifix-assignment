@@ -18,7 +18,7 @@ class User(models.Model):
 
     first_name = models.CharField(max_length=50)
     last_name = models.CharField(max_length=50)
-    username = models.CharField(max_length=50)
+    email = models.CharField(max_length=50)
     password = models.CharField(max_length=32)
     created_at = models.DateTimeField(auto_now_add=True)
     company_id = models.ForeignKey(Company, on_delete=models.CASCADE, null= True)
