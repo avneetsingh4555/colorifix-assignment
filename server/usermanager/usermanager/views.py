@@ -10,6 +10,7 @@ from rest_framework import status
 def register_user(request):
     if request.method == 'GET':
         users = User.objects.all()
+        # print(users[0].company_id.name)
         serializer = UserSerializer(users, many = True)
         return JsonResponse({'users': serializer.data})
 
