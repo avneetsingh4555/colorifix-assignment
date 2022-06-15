@@ -43,13 +43,13 @@ function AddPermissionGroup() {
 
 
   return (
-  <div className="row">
+  <div className="row justify-content-center">
       <div className="col-md-6">
         <div>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Field>
               <label>Enter Permission Group</label>
-              <input
+              <input className="mt-2"
                 placeholder="Permission Name"
                 type="text"
                 {...register("name", { required: true})}
@@ -57,7 +57,7 @@ function AddPermissionGroup() {
             </Form.Field>
             {errors.name && <p>Permission name must be filled</p>}
             
-            <Button type="submit">Submit</Button>
+            <Button className="btn btn-primary mt-3" type="submit">Submit</Button>
           </Form>
         </div>
       </div>

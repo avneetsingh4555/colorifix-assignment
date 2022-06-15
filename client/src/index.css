@@ -11,3 +11,13 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+input,select{
+  padding:8px;
+    border:0;
+  box-shadow:0 0 15px 4px rgba(0,0,0,0.06);
+}
+
+.field{
+  margin-top: 10px;
+}

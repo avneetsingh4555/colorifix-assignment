@@ -7,11 +7,11 @@ import AddPermissionGroup from "./forms/add-permisson-group";
 function App() {
   return (
     <div className="App">
-      <div class="navbar-area">
+      <div className="navbar-area">
         <Navbar />
       </div>
 
-      <div class="container">
+      <div className="container mt-3">
         <Routes>
           <Route path="users-list" element={<UsersList />} />
         </Routes>

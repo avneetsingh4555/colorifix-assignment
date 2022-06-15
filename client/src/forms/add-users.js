@@ -14,7 +14,7 @@ function AddUsersForm() {
   } = useForm();
   const onSubmit = (data) => {
     console.log("hello");
-    const res = fetch(`${baseURL}/add-user/`, {
+    const res = fetch(`${baseURL}/users/`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -67,8 +67,9 @@ function AddUsersForm() {
   };
 
   return (
-    <div className="row">
+    <div className="row justify-content-center">
       <div className="col-md-6">
+        <h3>Add User Info</h3>
         <div>
           <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Field>
@@ -104,13 +105,13 @@ function AddUsersForm() {
             <Form.Field>
               <label>Password</label>
               <input
-                placeholder="Email"
+                placeholder="Password"
                 {...register("password", {
                   required: true,
                 })}
               />
             </Form.Field>
-            {errors.email && <p>Please check the Email</p>}
+            {errors.email && <p>Please check the Password</p>}
             <Form.Field>
               <label>Company Name</label>
               <select {...register("company_id", { required: true })}>
@@ -132,9 +133,9 @@ function AddUsersForm() {
               </select>
             </Form.Field>
             {errors.permission_group && (
-              <p>Please check the Permsision Group</p>
+              <p>Please check the Permission Group</p>
             )}
-            <Button type="submit">Submit</Button>
+            <Button className="btn btn-primary mt-4" type="submit">Submit</Button>
           </Form>
         </div>
       </div>

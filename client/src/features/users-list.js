@@ -11,7 +11,7 @@ function UsersList() {
 
   useEffect(() => {
     axios
-      .get(`${baseURL}/add-user/`)
+      .get(`${baseURL}/users/`)
       .then((response) => {
         // this.setState({data: response.data});
         console.log(response.data.users);
@@ -23,7 +23,7 @@ function UsersList() {
   }, []);
   return (
     <div>
-      <table class="table">
+      <table className="table">
   <thead>
     <tr>
       <th scope="col">Id</th>
