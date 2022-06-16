@@ -3,13 +3,21 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import { useState, useEffect, useRef } from "react";
 import { Form, Button } from "semantic-ui-react";
+import Select from 'react-select'
 
 function AddPermissionGroup() {
   const baseURL = "http://127.0.0.1:8000";
   const { register, handleSubmit, formState: { errors }, } = useForm();
   const [status, setStatus] = useState(undefined);
+  const options = [
+  { value: 'chocolate', label: 'Chocolate' },
+  { value: 'strawberry', label: 'Strawberry' },
+  { value: 'vanilla', label: 'Vanilla' }
+] 
 
   const onSubmit = (data) => {
+
+    console.log(data)
     const res = fetch(`${baseURL}/add-permission-group/`, {
       method: "post",
       headers: {
@@ -40,8 +48,6 @@ function AddPermissionGroup() {
   };
  
   return (
-    
-   
     <div className="row justify-content-center">
       <div>
         {status?.type === 'show' && <div class="alert alert-success" role="alert">"Data saved successfully."</div>}
@@ -58,6 +64,11 @@ function AddPermissionGroup() {
               />
             </Form.Field>
             {errors.name && <p>Permission name must be filled</p>}
+            <Form.Field>
+              <label>Enter Permission Group</label>
+              <Select {...register("permissions", { required: true })} options={options} isMulti  />
+            </Form.Field>
+            {errors.permissions && <p>Please Select the Permissions</p>}
 
             <Button className="btn btn-primary mt-3" type="submit">Submit</Button>
           </Form>
