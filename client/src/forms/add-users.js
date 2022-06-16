@@ -1,8 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Form, Button } from "semantic-ui-react";
-import axios from "axios";
-import validator from "validator";
 import { useState, useEffect } from "react";
 
 function AddUsersForm() {
@@ -16,7 +14,7 @@ function AddUsersForm() {
   const [getcompanies, setCompaniesList] = useState([]);
   const [status, setStatus] = useState(undefined);
   const onSubmit = (data) => {
-    const res = fetch(`${baseURL}/users/`, {
+    fetch(`${baseURL}/users/`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -88,7 +86,9 @@ function AddUsersForm() {
                 {...register("first_name", { required: true, maxLength: 10 })}
               />
             </Form.Field>
-            {errors.first_name && <p>Please check the First Name</p>}
+            <span className="errors">
+              {errors.first_name && <p>Please check the First Name</p>}
+            </span>
             <Form.Field>
               <label>Last Name</label>
               <input
@@ -97,7 +97,9 @@ function AddUsersForm() {
                 {...register("last_name", { required: true, maxLength: 10 })}
               />
             </Form.Field>
-            {errors.last_name && <p>Please check the Last Name</p>}
+            <span className="errors">
+              {errors.last_name && <p>Please check the Last Name</p>}
+            </span>
             <Form.Field>
               <label>Email</label>
               <input
@@ -108,9 +110,10 @@ function AddUsersForm() {
                     /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                 })}
               />
-            </Form.Field>
-            {errors.email && <p>Please check the Email</p>}
-
+            </Form.Field>{" "}
+            <span className="errors">
+              {errors.email && <p>Please check the Email</p>}
+            </span>
             <Form.Field>
               <label>Company Name</label>
               <select {...register("company_id", { required: true })}>
@@ -119,9 +122,10 @@ function AddUsersForm() {
                   <option value={user.id}>{user.name}</option>
                 ))}
               </select>
-            </Form.Field>
-            {errors.company_id && <p>Please check the company</p>}
-
+            </Form.Field>{" "}
+            <span className="errors">
+              {errors.company_id && <p>Please check the company</p>}
+            </span>
             <Form.Field>
               <label>Permisson group</label>
               <select {...register("permission_group", { required: true })}>
@@ -130,10 +134,12 @@ function AddUsersForm() {
                   <option value={user.id}>{user.name}</option>
                 ))}
               </select>
-            </Form.Field>
-            {errors.permission_group && (
-              <p>Please check the Permission Group</p>
-            )}
+            </Form.Field>{" "}
+            <span className="errors">
+              {errors.permission_group && (
+                <p>Please check the Permission Group</p>
+              )}
+            </span>
             <Button className="btn btn-primary mt-4" type="submit">
               Submit
             </Button>

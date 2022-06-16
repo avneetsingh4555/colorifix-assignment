@@ -1,9 +1,7 @@
 import React from "react";
-import axios from "axios";
 import { useForm } from "react-hook-form";
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { Form, Button } from "semantic-ui-react";
-import Select from "react-select";
 
 function AddPermissionGroup() {
   const baseURL = "http://127.0.0.1:8000";
@@ -15,7 +13,7 @@ function AddPermissionGroup() {
   const [status, setStatus] = useState(undefined);
 
   const onSubmit = (data) => {
-    const res = fetch(`${baseURL}/add-permission-group/`, {
+    fetch(`${baseURL}/add-permission-group/`, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -69,8 +67,9 @@ function AddPermissionGroup() {
                 {...register("name", { required: true })}
               />
             </Form.Field>
-            {errors.name && <p>Permission name must be filled</p>}
-
+            <span className="errors">
+              {errors.name && <p>Permission name must be filled</p>}
+            </span>
             <Button className="btn btn-primary mt-3" type="submit">
               Submit
             </Button>

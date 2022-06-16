@@ -1,11 +1,10 @@
 import React from "react";
 import axios from "axios";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 
 function UsersList() {
   const baseURL = "http://127.0.0.1:8000";
 
-  const user = useRef([]);
   const [getUsers, setUsersList] = useState([]);
 
   useEffect(() => {
