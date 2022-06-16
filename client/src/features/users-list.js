@@ -24,28 +24,28 @@ function UsersList() {
   return (
     <div>
       <table className="table">
-  <thead>
-    <tr>
-      <th scope="col">Id</th>
-      <th scope="col">Name</th>
-      <th scope="col">Email</th>
-      <th scope="col">Permission Group</th>
-      <th scope="col">Company</th>
-    </tr>
-  </thead>
-  <tbody>
-     {getUsers.map((user) => (
-    <tr>
-      <th scope="row">{user.id}</th>
-      <td>{user.first_name}{' '}{user.last_name}</td>
-      <td>{user.email}</td>
-      <td>{user.company.name}</td>
-      <td>{user.p_group.name}</td>
-    </tr>
-     ))}
-  </tbody>
-</table>
-    
+        <thead>
+          <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Permission Group</th>
+            <th scope="col">Company</th>
+          </tr>
+        </thead>
+        <tbody>
+          {getUsers.map((user) => (
+            <tr>
+              <th scope="row">{user.id}</th>
+              <td>{user.first_name}{' '}{user.last_name}</td>
+              <td>{user.email}</td>
+              <td>{user.company.name}</td>
+              <td>{user.p_group.name}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
     </div>
   );
 }

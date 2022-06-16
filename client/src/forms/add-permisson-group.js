@@ -5,14 +5,11 @@ import { useState, useEffect, useRef } from "react";
 import { Form, Button } from "semantic-ui-react";
 
 function AddPermissionGroup() {
- const baseURL = "http://127.0.0.1:8000";
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const baseURL = "http://127.0.0.1:8000";
+  const { register, handleSubmit, formState: { errors }, } = useForm();
+  const [status, setStatus] = useState(undefined);
+
   const onSubmit = (data) => {
-    console.log(data);
     const res = fetch(`${baseURL}/add-permission-group/`, {
       method: "post",
       headers: {
@@ -20,30 +17,35 @@ function AddPermissionGroup() {
       },
       body: JSON.stringify(data),
     }).then(async response => {
-            const isJson = response.headers.get('content-type')?.includes('application/json');
-            const data = isJson && await response.json();
+      const isJson = response.headers.get('content-type')?.includes('application/json');
+      const data = isJson && await response.json();
 
-            // check for error response
-            if (!response.ok) {
-                // get error message from body or default to response status
-                const error = (data && data.message) || response.status;
-                return Promise.reject(error);
-            }
-
-            this.setState({ postId: data.id })
-        })
-        .catch(error => {
-            this.setState({ errorMessage: error.toString() });
-            console.error('There was an error!', error);
-        });
-
+      if (!response.ok) {
+        const error = (data && data.message) || response.status;
+        return Promise.reject(error);
+      }
+      if(response.status == 200){
+        setStatus({ type: 'show' });
+        setTimeout(function(){
+             setStatus({ type: 'hide' });
+        }.bind(this),5000);
+        
+      }
+        
+    })
+      .catch(error => {
+        this.setState({ errorMessage: error.toString() });
+        console.error('There was an error!', error);
+      });
   };
  
-  const [loading, setLoading] = useState(false);
-
-
   return (
-  <div className="row justify-content-center">
+    
+   
+    <div className="row justify-content-center">
+      <div>
+        {status?.type === 'show' && <div class="alert alert-success" role="alert">"Data saved successfully."</div>}
+      </div>
       <div className="col-md-6">
         <div>
           <Form onSubmit={handleSubmit(onSubmit)}>
@@ -52,11 +54,11 @@ function AddPermissionGroup() {
               <input className="mt-2"
                 placeholder="Permission Name"
                 type="text"
-                {...register("name", { required: true})}
+                {...register("name", { required: true })}
               />
             </Form.Field>
             {errors.name && <p>Permission name must be filled</p>}
-            
+
             <Button className="btn btn-primary mt-3" type="submit">Submit</Button>
           </Form>
         </div>

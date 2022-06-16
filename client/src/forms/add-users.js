@@ -7,13 +7,11 @@ import { useState, useEffect } from "react";
 
 function AddUsersForm() {
   const baseURL = "http://127.0.0.1:8000";
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm();
+  const { register, handleSubmit, formState: { errors }, } = useForm();
+  const [getpermissions, setPermissionList] = useState([]);
+  const [getcompanies, setCompaniesList] = useState([]);
+   const [status, setStatus] = useState(undefined);
   const onSubmit = (data) => {
-    console.log("hello");
     const res = fetch(`${baseURL}/users/`, {
       method: "post",
       headers: {
@@ -21,53 +19,58 @@ function AddUsersForm() {
       },
       body: JSON.stringify(data),
     })
-    .then(async response => {
-            const isJson = response.headers.get('content-type')?.includes('application/json');
-            const data = isJson && await response.json();
+      .then(async response => {
+        const isJson = response.headers.get('content-type')?.includes('application/json');
+        const data = isJson && await response.json();
 
-            // check for error response
-            if (!response.ok) {
-                // get error message from body or default to response status
-                const error = (data && data.message) || response.status;
-                return Promise.reject(error);
-            }
-
-            this.setState({ postId: data.id })
-        })
-        .catch(error => {
-            this.setState({ errorMessage: error.toString() });
-            console.error('There was an error!', error);
-        });
+        // check for error response
+        if (!response.ok) {
+          // get error message from body or default to response status
+          const error = (data && data.message) || response.status;
+          return Promise.reject(error);
+        }
+        if(response.status == 200){
+          console.log('hello');
+        setStatus({ type: 'show' });
+        setTimeout(function(){
+             setStatus({ type: 'hide' });
+        }.bind(this),5000);
+      }
   
+      })
+      .catch(error => {
+        this.setState({ errorMessage: error.toString() });
+        console.error('There was an error!', error);
+      });
+
   };
-  const [getpermissions, setPermissionList] = useState([]);
-  const [getcompanies, setCompaniesList] = useState([]);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     fetchData();
   }, []);
 
   const fetchData = () => {
-    setLoading(true);
+
 
     fetch(`${baseURL}/get-form-data/`)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         setPermissionList(data.data.cmp)
         setCompaniesList(data.data.pms)
-        // setUsersList(data);
-        setLoading(false);
+
+
       })
       .catch((error) => {
-        console.log(error);
-        setLoading(false);
+        console.log(error.message);
+
       });
   };
 
   return (
     <div className="row justify-content-center">
+       <div>
+        {status?.type === 'show' && <div class="alert alert-success" role="alert">"Data saved successfully."</div>}
+      </div>
       <div className="col-md-6">
         <h3>Add User Info</h3>
         <div>
