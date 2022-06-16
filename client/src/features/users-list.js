@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 
 function UsersList() {
   const baseURL = "http://127.0.0.1:8000";
-  // const { register, handleSubmit, formState: { errors } } = useForm();
 
   const user = useRef([]);
   const [getUsers, setUsersList] = useState([]);
@@ -13,8 +12,6 @@ function UsersList() {
     axios
       .get(`${baseURL}/users/`)
       .then((response) => {
-        // this.setState({data: response.data});
-        console.log(response.data.users);
         setUsersList(response.data.users);
       })
       .catch((error) => {
@@ -37,7 +34,9 @@ function UsersList() {
           {getUsers.map((user) => (
             <tr>
               <th scope="row">{user.id}</th>
-              <td>{user.first_name}{' '}{user.last_name}</td>
+              <td>
+                {user.first_name} {user.last_name}
+              </td>
               <td>{user.email}</td>
               <td>{user.company.name}</td>
               <td>{user.p_group.name}</td>
@@ -45,7 +44,6 @@ function UsersList() {
           ))}
         </tbody>
       </table>
-
     </div>
   );
 }

@@ -1,4 +1,3 @@
-# import imp
 from django.http import JsonResponse
 from .models import User, PermissionGroup, Company
 from .serializers import PermissionGroupSerializer, UserSerializer, CompanySerializer
@@ -6,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 
+#register_user handles the data of user based on GET and POST request and returns the JSON Response
 
 @api_view(['GET', 'POST'])
 def register_user(request):
@@ -21,8 +21,9 @@ def register_user(request):
             return Response(serializer.data, status=status.HTTP_200_OK)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+#get_form_values returns the Permisssion Group and Companies data in response 
 
-def get_company(request):
+def get_form_values(request):
 
     if request.method == 'GET':
         permissions = PermissionGroup.objects.all()
@@ -35,6 +36,7 @@ def get_company(request):
         }
         return JsonResponse({'data': entities})
 
+#add_permission_group adds the Permisssion Group values. 
 
 @api_view(["POST"])
 def add_permission_group(request):

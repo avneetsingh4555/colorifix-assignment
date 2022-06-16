@@ -3,19 +3,24 @@ from urllib import response
 from rest_framework import serializers
 from .models import Company, User, PermissionGroup
 
+#CompanySerializer for handling user data
 
 class CompanySerializer(serializers.ModelSerializer):
-
     class Meta:
         model = Company
         fields = ('id', 'name')
 
+
+#PermissionGroupSerializer for handling user data
 
 class PermissionGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = PermissionGroup
         fields = ('id', 'name')
 
+
+
+#Userserializer for handling user data
 
 class UserSerializer(serializers.ModelSerializer):
     company = CompanySerializer(
@@ -25,5 +30,5 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('id', 'first_name', 'last_name', 'email', 'password',
+        fields = ('id', 'first_name', 'last_name', 'email',
                   'company_id', 'permission_group', 'company', 'p_group')

@@ -82,9 +82,9 @@ WSGI_APPLICATION = 'usermanager.wsgi.application'
 DATABASES = {  
     'default': {  
         'ENGINE': 'django.db.backends.mysql',  
-        'NAME': 'my_database',  
+        'NAME': 'user_manager',  
         'USER': 'root',  
-        'PASSWORD': '',  
+        'PASSWORD': 'Wic@1234',  
         'HOST': '127.0.0.1',  
         'PORT': '3306',  
         'OPTIONS': {  

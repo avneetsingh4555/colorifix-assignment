@@ -21,6 +21,6 @@ from usermanager import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/', views.register_user),
-    path('get-form-data/', views.get_company),
+    path('get-form-data/', views.get_form_values),
     path('add-permission-group/', views.add_permission_group),
 ]
