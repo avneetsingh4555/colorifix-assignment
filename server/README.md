@@ -15,24 +15,30 @@ Clone repository:
 git clone https://github.com/avneetsingh4555/colorifix-assignment.git
 ```
 
-Run the application:
+### Activate the Environment
 
 ```
 cd ./colorifix-assignment/server
+
 source env/Scripts/activate
 ```
 
 cd ./usermanager
 
-```
+### Set up the Model Migrations
+
+python manage.py makemigrations usermanager
+
+python manage.py migrate usermanager
+
+python manage.py migrate
+
+### Create the Super User and Add Values to DB
+
+python manage.py createsuperuser
+
+### Run Server
+
 python manage.py runserver
-
-### Add Values to Database
-
-python manage.py runserver
-
 
 The serve command will serve application on following url: `http://127.0.0.1:8000/`
-
-### Configure Project
-```
